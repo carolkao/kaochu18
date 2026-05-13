@@ -12,9 +12,8 @@
         }
         body {
             background: #fdf5f6;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 0;
+            margin: 0;
             position: relative;
             overflow-x: hidden;
         }
@@ -34,44 +33,117 @@
             100% { opacity: 0;   transform: translateY(108vh) rotate(var(--rot)) translateX(var(--drift)); }
         }
 
-        /* --- Page header --- */
-        .page-header {
+        /* --- Sticky month nav --- */
+        .month-nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(253, 245, 246, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid #f0d8dc;
+            padding: 10px 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 18px;
-            position: relative;
-            z-index: 1;
+            gap: 8px;
+            flex-wrap: wrap;
         }
         .back-btn {
             display: inline-block;
-            padding: 8px 18px;
+            padding: 6px 14px;
             background: #c87888;
             color: white;
             text-decoration: none;
             border-radius: 8px;
-            font-size: 14px;
-            transition: background 0.2s;
+            font-size: 13px;
             white-space: nowrap;
+            transition: background 0.2s;
         }
         .back-btn:hover { background: #b06070; }
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: #e0c0c8;
+            flex-shrink: 0;
+        }
+        .month-jump-btn {
+            padding: 6px 14px;
+            background: #f9f0f2;
+            border: 1px solid #eedde4;
+            border-radius: 20px;
+            color: #8a6070;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .month-jump-btn:hover {
+            background: #c87888;
+            color: white;
+            border-color: #c87888;
+        }
+        .month-jump-btn.final {
+            background: #fef9ee;
+            border-color: #e8cc80;
+            color: #8a6820;
+        }
+        .month-jump-btn.final:hover {
+            background: #c8a050;
+            border-color: #c8a050;
+            color: white;
+        }
 
-        h1 {
+        /* --- Page header --- */
+        .page-header {
             text-align: center;
-            color: #5a3848;
-            margin: 0 0 6px;
-            letter-spacing: 2px;
-            font-size: 26px;
+            padding: 28px 20px 10px;
             position: relative;
             z-index: 1;
         }
-        .subtitle {
-            text-align: center;
+        .page-header h1 {
+            color: #5a3848;
+            margin: 0 0 4px;
+            letter-spacing: 2px;
+            font-size: 26px;
+        }
+        .page-header .subtitle {
             color: #a07888;
-            margin-bottom: 20px;
-            font-size: 15px;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* --- Content --- */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 60px;
             position: relative;
             z-index: 1;
+        }
+
+        /* --- Month section --- */
+        .month-section {
+            margin-bottom: 48px;
+            scroll-margin-top: 60px;
+        }
+        .month-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .month-header-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #e0b0b8, transparent);
+        }
+        .month-header-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #5a3848;
+            letter-spacing: 2px;
+            white-space: nowrap;
         }
 
         /* --- Calendar --- */
@@ -80,14 +152,6 @@
             border-radius: 12px;
             padding: 15px;
             box-shadow: 0 2px 16px rgba(170, 110, 130, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-        .month-title {
-            font-weight: bold;
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #5a3848;
         }
         .weekdays {
             display: grid;
@@ -112,15 +176,9 @@
             border-radius: 6px;
             background: #fdfafa;
         }
-        .day.empty {
-            background: transparent;
-        }
-        .day.weekend {
-            background: #fef5f0;
-        }
-        .day.holiday {
-            background: #fef5f0;
-        }
+        .day.empty { background: transparent; }
+        .day.weekend { background: #fef5f0; }
+        .day.holiday { background: #fef5f0; }
         .day .date-num {
             font-weight: bold;
             margin-bottom: 2px;
@@ -139,9 +197,7 @@
             word-break: break-all;
         }
         .day .visitors .morning,
-        .day .visitors .afternoon {
-            color: #1565c0;
-        }
+        .day .visitors .afternoon { color: #1565c0; }
         .day .note {
             font-size: 12px;
             color: #9060a8;
@@ -190,14 +246,11 @@
                         0 0 18px rgba(210, 170, 80, 0.18);
             position: relative;
         }
-        .day.day-final .date-num {
-            color: #8a6820;
-        }
+        .day.day-final .date-num { color: #8a6820; }
         .day.day-final::after {
             content: '✿';
             position: absolute;
-            top: 5px;
-            right: 7px;
+            top: 5px; right: 7px;
             font-size: 13px;
             color: #c8a050;
             opacity: 0.75;
@@ -214,28 +267,12 @@
         .day.day-ceremony .visitors .afternoon { color: #a07828; }
         .day.day-ceremony .note { color: #a07828; }
 
-        /* --- Days after 5/3 --- */
-        .day.day-after {
-            background: transparent;
-        }
-        .day.day-after .date-num {
-            color: #ddd;
-            font-weight: normal;
-        }
+        /* --- Days after 5/3 with no data --- */
+        .day.day-after { background: transparent; }
+        .day.day-after .date-num { color: #ddd; font-weight: normal; }
 
         /* --- Misc --- */
-        .loading {
-            text-align: center;
-            padding: 50px;
-            font-size: 18px;
-            color: #a07888;
-        }
-        .error {
-            text-align: center;
-            padding: 50px;
-            font-size: 18px;
-            color: #c06060;
-        }
+        .loading { text-align: center; padding: 50px; font-size: 18px; color: #a07888; }
 
         /* Photo hover preview */
         .photo-hover-preview {
@@ -266,47 +303,48 @@
             align-items: center;
         }
         .photo-modal.active { display: flex; }
-        .photo-modal img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 8px;
-        }
+        .photo-modal img { max-width: 90%; max-height: 90%; border-radius: 8px; }
         .photo-modal .close-btn {
-            position: absolute;
-            top: 20px; right: 20px;
-            color: white;
-            font-size: 36px;
-            cursor: pointer;
+            position: absolute; top: 20px; right: 20px;
+            color: white; font-size: 36px; cursor: pointer;
         }
         .photo-modal .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            padding: 20px;
-            user-select: none;
-            opacity: 0.7;
+            position: absolute; top: 50%; transform: translateY(-50%);
+            font-size: 40px; color: white; cursor: pointer;
+            padding: 20px; user-select: none; opacity: 0.7;
         }
         .photo-modal .nav-btn:hover { opacity: 1; }
         .photo-modal .nav-btn.prev { left: 10px; }
         .photo-modal .nav-btn.next { right: 10px; }
         .photo-modal .nav-btn.hidden { display: none; }
         .photo-modal .photo-counter {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
+            position: absolute; bottom: 20px; left: 50%;
             transform: translateX(-50%);
-            color: white;
-            font-size: 14px;
+            color: white; font-size: 14px;
+        }
+
+        /* Text modal */
+        .text-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.88);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .text-modal.active { display: flex; }
+        .text-modal .close-btn {
+            position: absolute; top: 20px; right: 20px;
+            color: white; font-size: 36px; cursor: pointer;
         }
 
         /* Mobile */
         @media (max-width: 768px) {
-            body { padding: 10px; }
-            h1 { font-size: 20px; }
-            .subtitle { font-size: 13px; }
+            .page-header { padding: 18px 16px 8px; }
+            .page-header h1 { font-size: 20px; }
+            .content { padding: 12px 10px 40px; }
             .month { padding: 10px; }
             .weekdays { font-size: 12px; }
             .days { gap: 1px; }
@@ -319,6 +357,7 @@
             .photo-hover-preview { display: none !important; }
             .day .note:hover::after { display: none !important; }
             .day.day-final::after { font-size: 11px; }
+            .month-jump-btn { font-size: 12px; padding: 5px 10px; }
         }
         @media (max-width: 480px) {
             .day { min-height: 80px; padding: 2px; }
@@ -326,47 +365,28 @@
             .day .visitors { font-size: 9px; }
             .day .photos img { width: 28px; height: 28px; }
         }
-
-        /* --- Month navigation --- */
-        .month-nav {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 24px;
-            position: relative;
-            z-index: 1;
-        }
-        .month-nav a {
-            display: inline-block;
-            padding: 10px 28px;
-            background: #c87888;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: background 0.2s, transform 0.15s;
-        }
-        .month-nav a:hover {
-            background: #b06070;
-            transform: translateY(-2px);
-        }
-        .month-nav a.hidden { visibility: hidden; }
     </style>
 </head>
 <body>
 
-    <div class="page-header">
+    <nav class="month-nav-sticky">
         <a href="index.html" class="back-btn">&larr; 返回</a>
+        <div class="nav-divider"></div>
+        <a href="#month-01" class="month-jump-btn">1月</a>
+        <a href="#month-02" class="month-jump-btn">2月</a>
+        <a href="#month-03" class="month-jump-btn">3月</a>
+        <a href="#month-04" class="month-jump-btn">4月</a>
+        <a href="#month-05" class="month-jump-btn final">5月 ✿</a>
+    </nav>
+
+    <div class="page-header">
+        <h1>永遠18歲的媽媽/阿嬤/阿祖</h1>
+        <p class="subtitle">陪伴日記・2026年1月－5月</p>
     </div>
 
-    <h1>永遠18歲的媽媽/阿嬤/阿祖</h1>
-    <p class="subtitle" id="subtitle">載入中...</p>
-
-    <div id="calendar">
-        <div class="loading">載入中...</div>
+    <div class="content">
+        <div id="calendar"><div class="loading">載入中...</div></div>
     </div>
-
-    <div class="month-nav" id="monthNav"></div>
 
     <div class="photo-hover-preview" id="photoHoverPreview">
         <img id="hoverPreviewImg" src="" alt="">
@@ -380,91 +400,56 @@
         <div class="photo-counter" id="photoCounter"></div>
     </div>
 
-    <div class="photo-modal" id="textModal">
+    <div class="text-modal" id="textModal">
         <span class="close-btn" id="closeTextModal">&times;</span>
         <div id="textModalContent" style="background:white;padding:20px;border-radius:12px;max-width:85%;max-height:70%;overflow:auto;font-size:16px;line-height:1.6;color:#333;"></div>
     </div>
 
     <script>
-        const weekdays  = ['日','一','二','三','四','五','六'];
-        const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-
-        const urlParams   = new URLSearchParams(window.location.search);
-        const monthParam  = urlParams.get('month') || '01';
-        const currentMonth = parseInt(monthParam, 10) - 1; // 0-indexed
-        const currentYear  = 2026;
-
-        document.title = `永遠18歲的媽媽/阿嬤/阿祖 - ${currentYear}年${monthNames[currentMonth]}`;
-        document.getElementById('subtitle').textContent = `${currentYear}年 ${monthNames[currentMonth]}`;
-
-        // Month navigation (Jan=01 … May=05)
-        const monthNum = parseInt(monthParam, 10);
-        const nav = document.getElementById('monthNav');
-        const prevNum = monthNum - 1;
-        const nextNum = monthNum + 1;
-        const prevLink = document.createElement('a');
-        prevLink.textContent = '← 上個月';
-        if (prevNum >= 1) {
-            prevLink.href = `month-page.html?month=${String(prevNum).padStart(2,'0')}`;
-        } else {
-            prevLink.classList.add('hidden');
-        }
-        const nextLink = document.createElement('a');
-        nextLink.textContent = '下個月 →';
-        if (nextNum <= 5) {
-            nextLink.href = `month-page.html?month=${String(nextNum).padStart(2,'0')}`;
-        } else {
-            nextLink.classList.add('hidden');
-        }
-        nav.appendChild(prevLink);
-        nav.appendChild(nextLink);
+        const weekdays   = ['日','一','二','三','四','五','六'];
+        const monthNames = ['1月','2月','3月','4月','5月'];
+        const MONTHS     = ['01','02','03','04','05'];
+        const currentYear = 2026;
 
         const holidays = {
-            '2026-01-01': '元旦',
-            '2026-01-02': '元旦(補)',
-            '2026-02-16': '除夕',
-            '2026-02-17': '春節',
-            '2026-02-18': '春節',
-            '2026-02-19': '春節',
-            '2026-04-04': '兒童節',
-            '2026-04-05': '清明節',
+            '2026-01-01': '元旦', '2026-01-02': '元旦(補)',
+            '2026-02-16': '除夕', '2026-02-17': '春節',
+            '2026-02-18': '春節', '2026-02-19': '春節',
+            '2026-04-04': '兒童節', '2026-04-05': '清明節',
             '2026-05-01': '勞動節',
         };
 
-        function isHoliday(year, month, day) {
-            return holidays[getDateKey(year, month, day)] || null;
+        function getDateKey(y, m, d) {
+            return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
         }
-        function isWeekend(year, month, day) {
-            const d = new Date(year, month, day).getDay();
-            return d === 0 || d === 6;
+        function isWeekend(y, m, d) {
+            const w = new Date(y, m, d).getDay(); return w===0||w===6;
         }
-        function getDateKey(year, month, day) {
-            return `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-        }
+        function isHoliday(y, m, d) { return holidays[getDateKey(y,m,d)] || null; }
 
-        function renderCalendar(bookings) {
-            const container = document.getElementById('calendar');
-            container.innerHTML = '';
-
+        function renderMonth(monthIdx, bookings) {
             const year  = currentYear;
-            const month = currentMonth;
+            const month = monthIdx;
+
+            const section = document.createElement('div');
+            section.className = 'month-section';
+            section.id = `month-${String(monthIdx+1).padStart(2,'0')}`;
+
+            const header = document.createElement('div');
+            header.className = 'month-header';
+            header.innerHTML = `<div class="month-header-line"></div>
+                <div class="month-header-title">${year}年 ${monthNames[monthIdx]}</div>`;
+            section.appendChild(header);
 
             const monthDiv = document.createElement('div');
             monthDiv.className = 'month';
 
-            const title = document.createElement('div');
-            title.className = 'month-title';
-            title.textContent = `${year}年 ${monthNames[month]}`;
-            monthDiv.appendChild(title);
-
-            const weekdaysDiv = document.createElement('div');
-            weekdaysDiv.className = 'weekdays';
+            const wdDiv = document.createElement('div');
+            wdDiv.className = 'weekdays';
             weekdays.forEach(w => {
-                const wd = document.createElement('div');
-                wd.textContent = w;
-                weekdaysDiv.appendChild(wd);
+                const d = document.createElement('div'); d.textContent = w; wdDiv.appendChild(d);
             });
-            monthDiv.appendChild(weekdaysDiv);
+            monthDiv.appendChild(wdDiv);
 
             const daysDiv = document.createElement('div');
             daysDiv.className = 'days';
@@ -473,31 +458,26 @@
             const daysInMonth = new Date(year, month+1, 0).getDate();
 
             for (let i = 0; i < firstDay; i++) {
-                const empty = document.createElement('div');
-                empty.className = 'day empty';
-                daysDiv.appendChild(empty);
+                const e = document.createElement('div'); e.className = 'day empty'; daysDiv.appendChild(e);
             }
 
             for (let day = 1; day <= daysInMonth; day++) {
-                const isFinalDay   = (month === 4 && day === 3);
-                const isAfterFinal = (month === 4 && day > 3);
-
-                const dayDiv = document.createElement('div');
-                const dateKey = getDateKey(year, month, day);
-                const booking = bookings[dateKey];
-                const hasContent = booking && (
-                    (booking.morning   && booking.morning.trim()) ||
-                    (booking.afternoon && booking.afternoon.trim()) ||
-                    (booking.note      && booking.note.trim()) ||
-                    (booking.photos    && booking.photos.length > 0)
+                const isFinalDay   = (month===4 && day===3);
+                const isAfterFinal = (month===4 && day>3);
+                const dayDiv       = document.createElement('div');
+                const dateKey      = getDateKey(year, month, day);
+                const booking      = bookings[dateKey];
+                const hasContent   = booking && (
+                    (booking.morning&&booking.morning.trim())||
+                    (booking.afternoon&&booking.afternoon.trim())||
+                    (booking.note&&booking.note.trim())||
+                    (booking.photos&&booking.photos.length>0)
                 );
 
-                // Days after 5/3 with no data: faded empty cell
                 if (isAfterFinal && !hasContent) {
                     dayDiv.className = 'day day-after';
                     const dn = document.createElement('div');
-                    dn.className = 'date-num';
-                    dn.textContent = day;
+                    dn.className = 'date-num'; dn.textContent = day;
                     dayDiv.appendChild(dn);
                     daysDiv.appendChild(dayDiv);
                     continue;
@@ -509,43 +489,38 @@
 
                 const weekend     = isWeekend(year, month, day);
                 const holidayName = isHoliday(year, month, day);
-                if (!isFinalDay) {
-                    if (weekend || holidayName) dayDiv.classList.add(weekend ? 'weekend' : 'holiday');
-                }
+                if (!isFinalDay && (weekend||holidayName))
+                    dayDiv.classList.add(weekend ? 'weekend' : 'holiday');
 
                 const dateNum = document.createElement('div');
-                dateNum.className = 'date-num';
-                dateNum.textContent = day;
+                dateNum.className = 'date-num'; dateNum.textContent = day;
                 dayDiv.appendChild(dateNum);
 
                 if (holidayName) {
-                    const hName = document.createElement('div');
-                    hName.className = 'holiday-name';
-                    hName.textContent = holidayName;
-                    dayDiv.appendChild(hName);
+                    const h = document.createElement('div');
+                    h.className = 'holiday-name'; h.textContent = holidayName;
+                    dayDiv.appendChild(h);
                 }
 
                 if (booking) {
-                    const hasM    = booking.morning   && booking.morning.trim();
-                    const hasA    = booking.afternoon && booking.afternoon.trim();
-                    const hasNote = booking.note      && booking.note.trim();
+                    const hasM    = booking.morning&&booking.morning.trim();
+                    const hasA    = booking.afternoon&&booking.afternoon.trim();
+                    const hasNote = booking.note&&booking.note.trim();
 
-                    if (hasM || hasA) {
-                        const visitors = document.createElement('div');
-                        visitors.className = 'visitors';
+                    if (hasM||hasA) {
+                        const vis = document.createElement('div');
+                        vis.className = 'visitors';
                         if (hasM) {
                             const m = document.createElement('div');
-                            m.className = 'morning';
-                            m.textContent = booking.morning;
-                            visitors.appendChild(m);
+                            m.className = 'morning'; m.textContent = booking.morning;
+                            vis.appendChild(m);
                         }
                         if (hasA) {
                             const a = document.createElement('div');
-                            a.className = 'afternoon';
-                            a.textContent = booking.afternoon;
-                            visitors.appendChild(a);
+                            a.className = 'afternoon'; a.textContent = booking.afternoon;
+                            vis.appendChild(a);
                         }
-                        dayDiv.appendChild(visitors);
+                        dayDiv.appendChild(vis);
                     }
 
                     if (hasNote) {
@@ -553,18 +528,18 @@
                         noteDiv.className = 'note';
                         noteDiv.setAttribute('data-full', booking.note);
                         noteDiv.textContent = booking.note.length > 40
-                            ? booking.note.substring(0, 40) + '...'
-                            : booking.note;
+                            ? booking.note.substring(0,40)+'...' : booking.note;
                         noteDiv.onclick = () => showTextModal(booking.note);
                         dayDiv.appendChild(noteDiv);
                     }
 
-                    if (booking.photos && booking.photos.length > 0) {
+                    if (booking.photos && booking.photos.length>0) {
                         const photosDiv = document.createElement('div');
                         photosDiv.className = 'photos';
                         booking.photos.forEach((photo, idx) => {
                             const img = document.createElement('img');
                             img.src = photo;
+                            img.loading = 'lazy';
                             img.onmouseenter = (e) => showHoverPreview(photo, e);
                             img.onmousemove  = (e) => moveHoverPreview(e);
                             img.onmouseleave = ()  => hideHoverPreview();
@@ -579,53 +554,45 @@
             }
 
             monthDiv.appendChild(daysDiv);
-            container.appendChild(monthDiv);
+            section.appendChild(monthDiv);
+            return section;
         }
 
         // Hover preview
         function showHoverPreview(src, e) {
-            const preview = document.getElementById('photoHoverPreview');
+            const p = document.getElementById('photoHoverPreview');
             document.getElementById('hoverPreviewImg').src = src;
-            preview.style.display = 'block';
+            p.style.display = 'block';
             moveHoverPreview(e);
         }
         function moveHoverPreview(e) {
-            const preview = document.getElementById('photoHoverPreview');
-            const rect = preview.getBoundingClientRect();
-            preview.style.left = Math.min(e.clientX + 20, window.innerWidth  - rect.width  - 20) + 'px';
-            preview.style.top  = Math.min(e.clientY + 20, window.innerHeight - rect.height - 20) + 'px';
+            const p = document.getElementById('photoHoverPreview');
+            const r = p.getBoundingClientRect();
+            p.style.left = Math.min(e.clientX+20, window.innerWidth -r.width -20)+'px';
+            p.style.top  = Math.min(e.clientY+20, window.innerHeight-r.height-20)+'px';
         }
-        function hideHoverPreview() {
-            document.getElementById('photoHoverPreview').style.display = 'none';
-        }
+        function hideHoverPreview() { document.getElementById('photoHoverPreview').style.display='none'; }
 
         // Photo modal
-        let modalPhotos = [], modalIndex = 0;
-        function showModal(src, photos, index) {
-            modalPhotos = photos || [src];
-            modalIndex  = index  || 0;
-            updateModal();
+        let modalPhotos=[], modalIndex=0;
+        function showModal(src, photos, idx) {
+            modalPhotos=photos; modalIndex=idx; updateModal();
             document.getElementById('photoModal').classList.add('active');
         }
         function updateModal() {
             document.getElementById('modalImg').src = modalPhotos[modalIndex];
             document.getElementById('photoCounter').textContent = `${modalIndex+1} / ${modalPhotos.length}`;
-            document.getElementById('prevBtn').classList.toggle('hidden', modalIndex === 0);
-            document.getElementById('nextBtn').classList.toggle('hidden', modalIndex === modalPhotos.length - 1);
+            document.getElementById('prevBtn').classList.toggle('hidden', modalIndex===0);
+            document.getElementById('nextBtn').classList.toggle('hidden', modalIndex===modalPhotos.length-1);
         }
-        function prevPhoto() { if (modalIndex > 0) { modalIndex--; updateModal(); } }
-        function nextPhoto() { if (modalIndex < modalPhotos.length - 1) { modalIndex++; updateModal(); } }
-        function hideModal() {
-            document.getElementById('photoModal').classList.remove('active');
-            modalPhotos = []; modalIndex = 0;
-        }
-
-        // Swipe
-        let touchStartX = 0;
-        document.getElementById('photoModal').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
-        document.getElementById('photoModal').addEventListener('touchend', e => {
-            const diff = touchStartX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) { diff > 0 ? nextPhoto() : prevPhoto(); }
+        function prevPhoto() { if(modalIndex>0){modalIndex--;updateModal();} }
+        function nextPhoto() { if(modalIndex<modalPhotos.length-1){modalIndex++;updateModal();} }
+        function hideModal() { document.getElementById('photoModal').classList.remove('active'); }
+        let touchX=0;
+        document.getElementById('photoModal').addEventListener('touchstart', e=>{touchX=e.touches[0].clientX;});
+        document.getElementById('photoModal').addEventListener('touchend', e=>{
+            const diff=touchX-e.changedTouches[0].clientX;
+            if(Math.abs(diff)>50){diff>0?nextPhoto():prevPhoto();}
         });
         document.getElementById('closeModal').onclick = hideModal;
 
@@ -634,38 +601,41 @@
             document.getElementById('textModalContent').textContent = text;
             document.getElementById('textModal').classList.add('active');
         }
-        function hideTextModal() { document.getElementById('textModal').classList.remove('active'); }
-        document.getElementById('closeTextModal').onclick = hideTextModal;
-        document.getElementById('textModal').onclick = function(e) { if (e.target === this) hideTextModal(); };
+        document.getElementById('closeTextModal').onclick = ()=>document.getElementById('textModal').classList.remove('active');
+        document.getElementById('textModal').onclick = function(e){if(e.target===this)this.classList.remove('active');};
 
-        // Load data
-        fetch(`${monthParam}-data.json`)
-            .then(r => { if (!r.ok) throw new Error('無法載入資料'); return r.json(); })
-            .then(data => renderCalendar(data))
-            .catch(err => {
-                // Even if no data file, still render the empty calendar
-                renderCalendar({});
-            });
+        // Load all months and render
+        async function init() {
+            const results = await Promise.all(
+                MONTHS.map(m => fetch(`${m}-data.json`).then(r=>r.ok?r.json():{}).catch(()=>({})))
+            );
+            const allBookings = Object.assign({}, ...results);
+            const container = document.getElementById('calendar');
+            container.innerHTML = '';
+            MONTHS.forEach((m, idx) => container.appendChild(renderMonth(idx, allBookings)));
 
-        // Subtle petals
+            const hash  = window.location.hash;
+            const param = new URLSearchParams(window.location.search).get('month');
+            const target = hash  ? document.querySelector(hash)
+                         : param ? document.getElementById(`month-${param}`)
+                         : null;
+            if (target) setTimeout(()=>target.scrollIntoView({behavior:'smooth'}), 100);
+        }
+        init();
+
+        // Petals
         const COLORS = ['#f9c4cc','#f7d4d8','#fce4ec','#f8bbd0','#ffffff','#fddde6'];
-        for (let i = 0; i < 14; i++) {
+        for (let i=0; i<14; i++) {
             const p = document.createElement('div');
             p.className = 'petal';
-            const size  = 7 + Math.random() * 9;
-            const dur   = 8 + Math.random() * 12;
-            const delay = -(Math.random() * 20);
-            const drift = (Math.random() - 0.5) * 100;
-            const rot   = 120 + Math.floor(Math.random() * 300);
-            p.style.cssText = [
-                `left: ${Math.random() * 100}vw`,
-                `top: 0`,
-                `width: ${size}px`,
-                `height: ${size * 0.75}px`,
-                `background: ${COLORS[Math.floor(Math.random() * COLORS.length)]}`,
-                `--drift: ${drift}px`,
-                `--rot: ${rot}deg`,
-                `animation: fall ${dur}s ${delay}s linear infinite`,
+            const size=7+Math.random()*9, dur=8+Math.random()*12, delay=-(Math.random()*20);
+            const drift=(Math.random()-0.5)*100, rot=120+Math.floor(Math.random()*300);
+            p.style.cssText=[
+                `left:${Math.random()*100}vw`,`top:0`,
+                `width:${size}px`,`height:${size*0.75}px`,
+                `background:${COLORS[Math.floor(Math.random()*COLORS.length)]}`,
+                `--drift:${drift}px`,`--rot:${rot}deg`,
+                `animation:fall ${dur}s ${delay}s linear infinite`,
             ].join(';');
             document.body.appendChild(p);
         }

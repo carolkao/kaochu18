@@ -291,7 +291,7 @@
             fetch(`${m.num}-data.json`, { method: 'HEAD' })
                 .then(r => {
                     if (r.ok) {
-                        a.href = `month-page.html?month=${m.num}`;
+                        a.href = `month-page.html#month-${m.num}`;
                         a.classList.remove('disabled');
                     }
                 })
