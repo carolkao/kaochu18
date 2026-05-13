@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/kaochu18/favicon.ico" type="image/x-icon">
+    <title>永遠18歲的媽媽/阿嬤/阿祖</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        body {
+            background: linear-gradient(160deg, #fdf2f4 0%, #f5e8f0 50%, #ede8f5 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- Petals --- */
+        .petal {
+            position: fixed;
+            border-radius: 50% 0 50% 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+        }
+        @keyframes fall {
+            0%   { opacity: 0;   transform: translateY(-6vh)  rotate(0deg); }
+            6%   { opacity: 0.9; }
+            94%  { opacity: 0.6; }
+            100% { opacity: 0;   transform: translateY(108vh) rotate(var(--rot)) translateX(var(--drift)); }
+        }
+
+        /* --- Card --- */
+        .container {
+            background: rgba(255, 255, 255, 0.86);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 22px;
+            padding: 52px 44px 44px;
+            max-width: 620px;
+            overflow: hidden;
+            width: 100%;
+            box-shadow: 0 16px 56px rgba(170, 110, 140, 0.14);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .title {
+            color: #5a3848;
+            margin: 0 0 8px;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+        .subtitle {
+            color: #a07888;
+            font-size: 14px;
+            margin: 0 0 6px;
+            letter-spacing: 1px;
+        }
+        .date-range {
+            color: #c4a0a8;
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 28px;
+        }
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e0b0b8, transparent);
+            margin: 0 0 30px;
+        }
+
+        /* --- Photo + months row --- */
+        .content-row {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        /* Desktop: photo inside content-row */
+        .grandma-photo--top { display: none; }
+        .grandma-photo--side {
+            width: 200px;
+            height: 267px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            object-fit: cover;
+            object-position: center top;
+            border: 3px solid rgba(224, 176, 184, 0.55);
+            box-shadow: 0 6px 28px rgba(170, 110, 130, 0.18);
+        }
+
+        /* mobile-inner adds padding below the top photo */
+        .mobile-inner {
+            padding: 0;
+        }
+
+        /* --- Month grid --- */
+        .months {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            flex: 1;
+            align-content: center;
+        }
+        /* 5th month centered */
+        .month-link:last-child {
+            grid-column: 1 / -1;
+            width: calc(50% - 5px);
+            margin: 0 auto;
+        }
+        .month-link {
+            display: block;
+            padding: 18px 6px 14px;
+            background: #f9f0f2;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #8a6070;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+            border: 1px solid #eedde4;
+        }
+        .month-link:hover {
+            background: #c87888;
+            color: white;
+            border-color: #c87888;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(200, 120, 136, 0.32);
+        }
+        .month-link.disabled {
+            background: #f5f5f5;
+            color: #ccc;
+            border-color: #eee;
+            pointer-events: none;
+        }
+
+        /* May — final month */
+        .month-link.final {
+            background: #fef9ee;
+            border-color: #e8cc80;
+            color: #8a6820;
+        }
+        .month-link.final .petal-icon {
+            display: block;
+            font-size: 13px;
+            color: #c8a050;
+            margin-top: 4px;
+            line-height: 1;
+        }
+        .month-link.final:hover {
+            background: #c8a050;
+            color: white;
+            border-color: #c8a050;
+            box-shadow: 0 6px 20px rgba(200, 160, 80, 0.32);
+        }
+        .month-link.final:hover .petal-icon {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* --- Farewell --- */
+        .farewell {
+            color: #b09898;
+            font-size: 13px;
+            line-height: 2;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .album-link {
+            display: inline-block;
+            font-size: 13px;
+            color: #a07888;
+            text-decoration: none;
+            border: 1px solid #e0c0c8;
+            border-radius: 20px;
+            padding: 7px 18px;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .album-link:hover {
+            background: #c87888;
+            color: white;
+            border-color: #c87888;
+        }
+
+        @media (max-width: 520px) {
+            body {
+                align-items: flex-start;
+                padding: 16px 16px 32px;
+            }
+            .container {
+                padding: 0 0 28px 0;
+                border-radius: 16px;
+                max-width: 100%;
+            }
+            /* Mobile: top banner photo shown, side photo hidden */
+            .grandma-photo--top {
+                display: block;
+                width: 100%;
+                height: 340px;
+                border-radius: 14px 14px 0 0;
+                object-fit: cover;
+                object-position: center 10%;
+            }
+            .grandma-photo--side { display: none; }
+            .mobile-inner { padding: 20px 20px 0; }
+            .title { font-size: 22px; }
+            .content-row {
+                flex-direction: column;
+                gap: 16px;
+                margin-bottom: 20px;
+            }
+            .months { grid-template-columns: repeat(2, 1fr); }
+            .month-link { padding: 14px 6px 12px; }
+            .month-link:last-child {
+                grid-column: 1 / -1;
+                width: calc(50% - 5px);
+                margin: 0 auto;
+            }
+            .farewell { padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="photos/kaochu.jpg" alt="阿嬤" class="grandma-photo grandma-photo--top">
+        <div class="mobile-inner">
+            <h1 class="title">永遠18歲的媽媽/阿嬤/阿祖</h1>
+            <p class="subtitle">陪伴日記</p>
+            <p class="date-range">2026年1月 &ndash; 2026年5月3日</p>
+            <div class="divider"></div>
+
+            <div class="content-row">
+                <img src="photos/kaochu.jpg" alt="阿嬤" class="grandma-photo grandma-photo--side">
+                <div class="months" id="months-grid"></div>
+            </div>
+        </div>
+
+        <p class="farewell">
+            謝謝每一位陪伴阿嬤的家人
+        </p>
+        <a href="https://photos.app.goo.gl/RbCvcsAuctKnxBEg6" target="_blank" class="album-link">
+            📷 家人共享相簿・歡迎上傳阿嬤的照片
+        </a>
+    </div>
+
+    <script>
+        const MONTHS = [
+            { num: '01', name: '1月' },
+            { num: '02', name: '2月' },
+            { num: '03', name: '3月' },
+            { num: '04', name: '4月' },
+            { num: '05', name: '5月', final: true },
+        ];
+
+        const grid = document.getElementById('months-grid');
+        MONTHS.forEach(m => {
+            const a = document.createElement('a');
+            a.href = '#';
+            a.id = `month-${m.num}`;
+            a.className = 'month-link disabled' + (m.final ? ' final' : '');
+
+            const name = document.createElement('span');
+            name.textContent = m.name;
+            a.appendChild(name);
+
+            if (m.final) {
+                const icon = document.createElement('span');
+                icon.className = 'petal-icon';
+                icon.textContent = '✿';
+                a.appendChild(icon);
+            }
+
+            grid.appendChild(a);
+
+            fetch(`${m.num}-data.json`, { method: 'HEAD' })
+                .then(r => {
+                    if (r.ok) {
+                        a.href = `month-page.html?month=${m.num}`;
+                        a.classList.remove('disabled');
+                    }
+                })
+                .catch(() => {});
+        });
+
+        // Falling petals
+        const COLORS = ['#f9c4cc', '#f7d4d8', '#fce4ec', '#f8bbd0', '#ffffff', '#fddde6', '#f5c6d0'];
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            const size    = 8 + Math.random() * 11;
+            const dur     = 7 + Math.random() * 10;
+            const delay   = -(Math.random() * 18);
+            const drift   = (Math.random() - 0.5) * 130;
+            const rot     = 120 + Math.floor(Math.random() * 300);
+            p.style.cssText = [
+                `left: ${Math.random() * 100}vw`,
+                `top: 0`,
+                `width: ${size}px`,
+                `height: ${size * 0.75}px`,
+                `background: ${COLORS[Math.floor(Math.random() * COLORS.length)]}`,
+                `--drift: ${drift}px`,
+                `--rot: ${rot}deg`,
+                `animation: fall ${dur}s ${delay}s linear infinite`,
+            ].join(';');
+            document.body.appendChild(p);
+        }
+    </script>
+</body>
+</html>
