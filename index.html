@@ -197,6 +197,59 @@
             border-color: #c87888;
         }
 
+        /* --- Upcoming events --- */
+        .events-section {
+            margin-top: 28px;
+            text-align: left;
+        }
+        .events-title {
+            font-size: 12px;
+            color: #c4a0a8;
+            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .event-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 12px 14px;
+            background: #fdf7f8;
+            border-radius: 10px;
+            border: 1px solid #f0dde2;
+            margin-bottom: 8px;
+        }
+        .event-date {
+            flex-shrink: 0;
+            text-align: center;
+        }
+        .event-date-solar {
+            font-size: 16px;
+            font-weight: 700;
+            color: #5a3848;
+            line-height: 1.1;
+        }
+        .event-date-lunar {
+            font-size: 10px;
+            color: #c4a0a8;
+            margin-top: 2px;
+        }
+        .event-divider {
+            width: 1px;
+            align-self: stretch;
+            background: #eedde4;
+            flex-shrink: 0;
+        }
+        .event-desc {
+            font-size: 13px;
+            color: #7a5868;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 520px) {
+            .events-section { margin-top: 20px; }
+        }
+
         @media (max-width: 520px) {
             body {
                 align-items: flex-start;
@@ -257,6 +310,21 @@
         <a href="https://photos.app.goo.gl/RbCvcsAuctKnxBEg6" target="_blank" class="album-link">
             📷 家人共享相簿・歡迎上傳阿嬤的照片
         </a>
+
+        <div class="events-section">
+            <div class="events-title">接下來的重要日子</div>
+            <div class="event-item">
+                <div class="event-date">
+                    <div class="event-date-solar">7月3日</div>
+                    <div class="event-date-lunar">農曆五月十九</div>
+                </div>
+                <div class="event-divider"></div>
+                <div class="event-desc">
+                    阿嬤生日<br>
+                    七兄弟姐妹汀州路團聚
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
