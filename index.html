@@ -197,51 +197,13 @@
             border-color: #c87888;
         }
 
-        /* --- Memorial video --- */
-        .video-link {
+        /* --- Links row --- */
+        .links-row {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-top: 14px;
-            padding: 14px 18px;
-            background: linear-gradient(135deg, #fdf4f6, #f8f0f8);
-            border: 1px solid #e8d0d8;
-            border-radius: 14px;
-            text-decoration: none;
-            transition: all 0.25s;
-        }
-        .video-link:hover {
-            background: linear-gradient(135deg, #f8e8ec, #f2e8f4);
-            border-color: #d0a8b8;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(170,110,130,0.12);
-        }
-        .video-play-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #c87888;
-            display: flex;
-            align-items: center;
+            gap: 10px;
             justify-content: center;
-            flex-shrink: 0;
-            transition: background 0.2s;
-        }
-        .video-link:hover .video-play-icon { background: #b06070; }
-        .video-play-icon svg {
-            width: 16px; height: 16px; fill: white;
-            margin-left: 2px;
-        }
-        .video-text { text-align: left; }
-        .video-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #5a3848;
-            margin-bottom: 2px;
-        }
-        .video-sub {
-            font-size: 12px;
-            color: #b09898;
+            flex-wrap: wrap;
+            margin-top: 0;
         }
 
         /* --- Upcoming events --- */
@@ -354,19 +316,14 @@
         <p class="farewell">
             謝謝每一位陪伴阿嬤的家人
         </p>
-        <a href="https://photos.app.goo.gl/RbCvcsAuctKnxBEg6" target="_blank" class="album-link">
-            📷 家人共享相簿・歡迎上傳阿嬤的照片
-        </a>
-
-        <a href="https://www.youtube.com/watch?si=zBt8IzjqiTgU5u_X&v=PWixhGImk9M&feature=youtu.be" target="_blank" class="video-link">
-            <div class="video-play-icon">
-                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-            </div>
-            <div class="video-text">
-                <div class="video-title">追思影片</div>
-                <div class="video-sub">永遠思念・永遠18歲</div>
-            </div>
-        </a>
+        <div class="links-row">
+            <a href="https://photos.app.goo.gl/RbCvcsAuctKnxBEg6" target="_blank" class="album-link">
+                📷 家人共享相簿
+            </a>
+            <a href="https://www.youtube.com/watch?si=zBt8IzjqiTgU5u_X&v=PWixhGImk9M&feature=youtu.be" target="_blank" class="album-link">
+                ▶ 追思影片
+            </a>
+        </div>
 
         <div class="events-section">
             <div class="events-title">接下來的重要日子</div>
